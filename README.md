@@ -1,6 +1,6 @@
 # CinDM: Compositional Generative Inverse  Design (ICLR 2024 spotlight)
 
-[Paper](https://openreview.net/forum?id=wmX0CqFSd7) | [Poster](https://github.com/AI4Science-WestlakeU/cindm/assets/CinDM_poster.pdf) | [Tweet](https://twitter.com/tailin_wu/status/1747259448635367756) 
+[Paper](https://openreview.net/forum?id=wmX0CqFSd7) | [Poster](https://github.com/AI4Science-WestlakeU/cindm/blob/main/assets/CinDM_poster.pdf) | [Tweet](https://twitter.com/tailin_wu/status/1747259448635367756) 
 
 Official repo for the paper [Compositional Generative Inverse  Design](https://openreview.net/forum?id=wmX0CqFSd7)<br />
 [Tailin Wu*](https://tailin.org/), [Takashi Maruyama*](https://sites.google.com/view/tmaruyama/home), [Long Wei*](), [Tao Zhang*](), [Yilun Du*](https://yilundu.github.io/),[Gianluca Iaccarino](https://profiles.stanford.edu/gianluca-iaccarino) [Jure Leskovec](https://cs.stanford.edu/people/jure/)<br />
@@ -119,3 +119,14 @@ python inference/baseline/inverse_design_CEM_discrete_fno_twobds.py
 ```
 
 ## Citation
+If you find our work and/or our code useful, please cite us via:
+
+```bibtex
+@inproceedings{wu2024compositional,
+  title={Compositional Generative Inverse  Design},
+  author={Tailin Wu and Takashi Maruyama and Long Wei and Tao Zhang and Yilun Du and Gianluca Iaccarino and Jure Leskovec},
+  booktitle={The Eighteenth International Conference on Learning Representations},
+  year={2024},
+  url={https://openreview.net/forum?id=wmX0CqFSd7}
+}
+```
