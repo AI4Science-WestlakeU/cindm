@@ -1,0 +1,6 @@
+*.pyc
+\.idea
+\.pytest_cache
+.vscode
+.ipynb*
+__pycache__

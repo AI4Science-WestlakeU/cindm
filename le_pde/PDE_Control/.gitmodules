@@ -1,0 +1,3 @@
+[submodule "PhiFlow"]
+	path = PhiFlow
+	url = https://github.com/tum-pbs/PhiFlow.git
