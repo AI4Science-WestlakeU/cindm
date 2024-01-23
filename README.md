@@ -125,7 +125,7 @@ If you find our work and/or our code useful, please cite us via:
 @inproceedings{wu2024compositional,
   title={Compositional Generative Inverse  Design},
   author={Tailin Wu and Takashi Maruyama and Long Wei and Tao Zhang and Yilun Du and Gianluca Iaccarino and Jure Leskovec},
-  booktitle={The Eighteenth International Conference on Learning Representations},
+  booktitle={The Twelfth International Conference on Learning Representations},
   year={2024},
   url={https://openreview.net/forum?id=wmX0CqFSd7}
 }
