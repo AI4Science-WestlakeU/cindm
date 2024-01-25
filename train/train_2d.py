@@ -1,7 +1,7 @@
 import sys, os
 sys.path.append(os.path.join(os.path.dirname("__file__"), '..'))
 sys.path.append(os.path.join(os.path.dirname("__file__"), '..', '..'))
-from CinDM_anonymous.model.diffusion_2d import Unet, GaussianDiffusion, Trainer
+from cindm.model.diffusion_2d import Unet, GaussianDiffusion, Trainer
 import argparse
 
 parser = argparse.ArgumentParser(description='Train EBM model')

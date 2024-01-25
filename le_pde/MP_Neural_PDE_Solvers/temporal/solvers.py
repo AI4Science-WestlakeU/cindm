@@ -8,7 +8,7 @@ from typing import Any, Callable
 import sys, os
 sys.path.append(os.path.join(os.path.dirname("__file__"), '..'))
 sys.path.append(os.path.join(os.path.dirname("__file__"), '..', '..'))
-from CinDM_anonymous.le_pde.MP_Neural_PDE_Solvers.temporal.tableaux import *
+from cindm.le_pde.MP_Neural_PDE_Solvers.temporal.tableaux import *
 
 torch.set_default_dtype(torch.float32)
 

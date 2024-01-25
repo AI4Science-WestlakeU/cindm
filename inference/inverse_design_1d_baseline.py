@@ -8,25 +8,25 @@ import os
 sys.path.append(os.path.join(os.path.dirname("__file__"), '..'))
 sys.path.append(os.path.join(os.path.dirname("__file__"), '..', '..'))
 import argparse
-from CinDM_anonymous.model.diffusion_1d import Unet1D, GaussianDiffusion1D, Trainer1D, num_to_groups,TemporalUnet1D,Unet1D_forward_model,linear_beta_schedule
-from CinDM_anonymous.filepath import EXP_PATH
+from cindm.model.diffusion_1d import Unet1D, GaussianDiffusion1D, Trainer1D, num_to_groups,TemporalUnet1D,Unet1D_forward_model,linear_beta_schedule
+from cindm.filepath import EXP_PATH
 import matplotlib.pylab as plt
 import matplotlib.backends.backend_pdf
-from CinDM_anonymous.data.nbody_dataset import NBodyDataset
+from cindm.data.nbody_dataset import NBodyDataset
 import numpy as np
 import pdb
 import torch
 from torch_geometric.data.dataloader import DataLoader
-from CinDM_anonymous.utils import p, get_item_1d, COLOR_LIST,CustomSampler,simulation,eval_simu,caculate_confidence_interval,cosine_beta_schedule
+from cindm.utils import p, get_item_1d, COLOR_LIST,CustomSampler,simulation,eval_simu,caculate_confidence_interval,cosine_beta_schedule
 from torch.autograd import grad
 
 # In[ ]:
 import argparse
-import CinDM_anonymous.GNS_model
+import cindm.GNS_model as GNS_model
 import torch.nn as nn
 import os
 import math
-import CinDM_anonymous.filepath as filepath
+import cindm.filepath as filepath
 parser = argparse.ArgumentParser(description='Analyze the trained model')
 
 parser.add_argument('--exp_id', default='inv_design', type=str, help='experiment folder id')
@@ -97,7 +97,7 @@ parser.add_argument('--initialization_mode', default=0, type=int,
                     help='in wgich mode to iniatialize cond: 0. random noise;1. data;2. data+random noise ')
 parser.add_argument('--num_batchs', default=1, type=int,
                     help='number of batchs ')
-parser.add_argument('--batch_size_list', default="[50]", type=str,
+parser.add_argument('--batch_size_list', default="[500]", type=str,
                     help='the list of different batch_size ')
 
 args = parser.parse_args()
@@ -442,7 +442,7 @@ def analyse(val_batch_size,loss_list):
                 )
                     #dataset
                 test_dataset=GNS_model.Nbody_gns_dataset.nbody_gns_dataset_cond_one(
-                    data_dir="/user/project/inverse_design/dataset/nbody_dataset/",
+                    data_dir=args.dataset_path,
                     phase='test',
                     time_interval=4,
                     verbose=0,
@@ -464,7 +464,7 @@ def analyse(val_batch_size,loss_list):
                 #dataset
                 # pdb.set_trace()
                 test_dataset=GNS_model.Nbody_gns_dataset.nbody_gns_dataset_cond_one(
-                    data_dir="/user/project/inverse_design/dataset/nbody_dataset/",
+                    data_dir=args.dataset_path,
                     phase='test',
                     time_interval=4,
                     verbose=0,
@@ -919,6 +919,7 @@ def analyse(val_batch_size,loss_list):
                 cond=torch.cat([poss_cond,vel],dim=3)
                 cond=torch.tensor(cond,requires_grad=True).to(device)
                 cond=get_cond(cond,initialization_mode=args.initialization_mode)
+                cond.requires_grad=True
                 # y_gt=torch.cat([tgt_poss,tgt_vels*(60./4.)],dim=3).permute(0,2,1,3).reshape(tgt_poss.shape[0],tgt_poss.shape[2],-1)
                 y_gt,pred,_=GNS_model.dyn_model.GNS_inference(data_GNS,cond,gns_model,test_dataset.metadata,device,rollout_steps=args.rollout_steps+(args.n_composed-1)*10,is_batch_for_GNS=args.is_batch_for_GNS)
                 target = torch.tensor([0.5,0.5], device=device, dtype=float)

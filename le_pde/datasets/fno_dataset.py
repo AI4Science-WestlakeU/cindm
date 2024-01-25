@@ -7,8 +7,8 @@ from torch_geometric.data import Dataset, Data
 import pdb
 import sys, os
 sys.path.append(os.path.join(os.path.dirname("__file__"), '..', '..'))
-from CinDM_anonymous.le_pde.utils import PDE_PATH, FNO_PATH, INVALID_VALUE
-from CinDM_anonymous.le_pde.utils import read_zipped_array, write_zipped_array
+from cindm.le_pde.utils import PDE_PATH, FNO_PATH, INVALID_VALUE
+from cindm.le_pde.utils import read_zipped_array, write_zipped_array
 
 
 class FNOData(Dataset):

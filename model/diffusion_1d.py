@@ -19,16 +19,16 @@ import sys
 import os
 sys.path.append(os.path.join(os.path.dirname("__file__"), '..'))
 sys.path.append(os.path.join(os.path.dirname("__file__"), '..', '..'))
-from CinDM_anonymous.data.nbody_dataset import NBodyDataset
-from CinDM_anonymous.utils import p, get_item_1d , COLOR_LIST,CustomLoss
+from cindm.data.nbody_dataset import NBodyDataset
+from cindm.utils import p, get_item_1d , COLOR_LIST,CustomLoss
 import numpy as np
 import matplotlib.pyplot as plt
-from CinDM_anonymous.utils import Printer,CustomSampler
-from CinDM_anonymous.filepath import EXP_PATH
+from cindm.utils import Printer,CustomSampler
+from cindm.filepath import EXP_PATH
 import matplotlib.pylab as plt
 import matplotlib.backends.backend_pdf
 # import UHMC
-from CinDM_anonymous.utils import visulization, p
+from cindm.utils import visulization, p
 grad_mean_list=[]
 ss_list=[]
 # constants

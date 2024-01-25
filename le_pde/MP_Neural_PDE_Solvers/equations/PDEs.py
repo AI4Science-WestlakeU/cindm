@@ -8,8 +8,8 @@ import sys, os
 sys.path.append(os.path.join(os.path.dirname("__file__"), '..'))
 sys.path.append(os.path.join(os.path.dirname("__file__"), '..', '..'))
 sys.path.append(os.path.join(os.path.dirname("__file__"), '..', '..', '..'))
-from CinDM_anonymous.le_pde.MP_Neural_PDE_Solvers.common.derivatives import WENO, FDM
-from CinDM_anonymous.le_pde.MP_Neural_PDE_Solvers.temporal.solvers import *
+from cindm.le_pde.MP_Neural_PDE_Solvers.common.derivatives import WENO, FDM
+from cindm.le_pde.MP_Neural_PDE_Solvers.temporal.solvers import *
 
 
 class PDE(nn.Module):

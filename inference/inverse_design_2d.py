@@ -16,17 +16,17 @@ from torch import optim
 from torch_geometric.data.dataloader import DataLoader
 sys.path.append(os.path.join(os.path.dirname("__file__"), '..'))
 sys.path.append(os.path.join(os.path.dirname("__file__"), '..', '..'))
-from CinDM_anonymous.data.airfoil_dataset import Ellipse
+from cindm.data.airfoil_dataset import Ellipse
 from torch.autograd import grad
-from CinDM_anonymous.utils import compute_pressForce, reconstruct_boundary
+from cindm.utils import compute_pressForce, reconstruct_boundary
 from tqdm import tqdm
 from accelerate import Accelerator
 from torch.optim import Adam
 from pathlib import Path
-from CinDM_anonymous.model.diffusion_2d import Unet, ForceUnet, extract, GaussianDiffusion, Trainer
+from cindm.model.diffusion_2d import Unet, ForceUnet, extract, GaussianDiffusion, Trainer
 from shapely.geometry import Polygon
 from matplotlib.backends.backend_pdf import PdfPages
-from CinDM_anonymous.filepath import AIRFOILS_PATH
+from cindm.filepath import AIRFOILS_PATH
 
 device = torch.device("cuda:0")
 normalization_filename = os.path.join(AIRFOILS_PATH, "training_trajectories/", "normalization_max_min.p") 

@@ -5,8 +5,8 @@ from torch_geometric.data import Dataset, Data
 import pdb
 import sys, os
 sys.path.append(os.path.join(os.path.dirname("__file__"), '..', '..'))
-from CinDM_anonymous.le_pde.pytorch_net.util import plot_matrices
-from CinDM_anonymous.le_pde.utils import get_root_dir, read_zipped_array, write_zipped_array, PDE_PATH, MOVINGGAS_PATH
+from cindm.le_pde.pytorch_net.util import plot_matrices
+from cindm.le_pde.utils import get_root_dir, read_zipped_array, write_zipped_array, PDE_PATH, MOVINGGAS_PATH
 
 
 class MovingGas(Dataset):

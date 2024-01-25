@@ -2,7 +2,7 @@ import argparse
 import sys, os
 sys.path.append(os.path.join(os.path.dirname("__file__"), '..'))
 sys.path.append(os.path.join(os.path.dirname("__file__"), '..', '..'))
-from CinDM_anonymous.le_pde.pytorch_net.util import str2bool
+from cindm.le_pde.pytorch_net.util import str2bool
 
 def arg_parse():
     parser = argparse.ArgumentParser(description='PDE argparse.')

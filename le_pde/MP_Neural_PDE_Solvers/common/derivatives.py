@@ -6,7 +6,7 @@ import torch
 import sys, os
 sys.path.append(os.path.join(os.path.dirname("__file__"), '..'))
 sys.path.append(os.path.join(os.path.dirname("__file__"), '..', '..'))
-import CinDM_anonymous.le_pde.MP_Neural_PDE_Solvers.common.coefficients as coefficients
+import cindm.le_pde.MP_Neural_PDE_Solvers.common.coefficients as coefficients
 from torch import nn
 from scipy.ndimage import gaussian_filter
 from scipy.special import poch

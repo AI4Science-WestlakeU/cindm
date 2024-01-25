@@ -6,7 +6,7 @@ import pdb
 import sys, os
 sys.path.append(os.path.join(os.path.dirname("__file__"), '..'))
 sys.path.append(os.path.join(os.path.dirname("__file__"), '..', '..'))
-from CinDM_anonymous.filepath import AIRFOILS_PATH
+from cindm.filepath import AIRFOILS_PATH
 
 
 # In[4]:

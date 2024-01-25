@@ -25,12 +25,12 @@ sys.path.append(os.path.join(os.path.dirname("__file__"), '..'))
 sys.path.append(os.path.join(os.path.dirname("__file__"), '..', '..'))
 sys.path.append("GraphPDE")
 
-from CinDM_anonymous.le_pde.datasets.load_dataset import load_data
-from CinDM_anonymous.le_pde.pytorch_net.util import get_repeat_interleave, forward_Runge_Kutta, tuple_add, tuple_mul, to_np_array, record_data, ddeepcopy as deepcopy, Attr_Dict, set_seed, pdump, pload, get_time, check_same_model_dict, print_banner, to_string
-from CinDM_anonymous.le_pde.utils import PyG_to_Attr_Dict, SpectralNorm, SpectralNormReg, requires_grad, process_data_for_CNN, get_regularization, get_batch_size, get_Hessian_penalty
-from CinDM_anonymous.le_pde.utils import detach_data, get_model_dict, loss_op_core, MLP, get_keys_values, flatten, get_elements, get_activation, to_cpu, to_tuple_shape, parse_multi_step, parse_act_name, parse_reg_type, loss_op, get_normalization, get_edge_index_kernel, loss_hybrid, stack_tuple_elements, add_noise, get_neg_loss, get_pos_dims_dict
-from CinDM_anonymous.le_pde.utils import p, seed_everything, is_diagnose, get_precision_floor, parse_string_idx_to_list, parse_loss_type, get_loss_ar, get_max_pool, get_data_next_step, get_LCM_input_shape, expand_same_shape, Sum, Mean, Channel_Gen, Flatten, Permute, Reshape, add_data_noise 
-from CinDM_anonymous.GraphPDE.gnn_module import mesh_PDE
+from cindm.le_pde.datasets.load_dataset import load_data
+from cindm.le_pde.pytorch_net.util import get_repeat_interleave, forward_Runge_Kutta, tuple_add, tuple_mul, to_np_array, record_data, ddeepcopy as deepcopy, Attr_Dict, set_seed, pdump, pload, get_time, check_same_model_dict, print_banner, to_string
+from cindm.le_pde.utils import PyG_to_Attr_Dict, SpectralNorm, SpectralNormReg, requires_grad, process_data_for_CNN, get_regularization, get_batch_size, get_Hessian_penalty
+from cindm.le_pde.utils import detach_data, get_model_dict, loss_op_core, MLP, get_keys_values, flatten, get_elements, get_activation, to_cpu, to_tuple_shape, parse_multi_step, parse_act_name, parse_reg_type, loss_op, get_normalization, get_edge_index_kernel, loss_hybrid, stack_tuple_elements, add_noise, get_neg_loss, get_pos_dims_dict
+from cindm.le_pde.utils import p, seed_everything, is_diagnose, get_precision_floor, parse_string_idx_to_list, parse_loss_type, get_loss_ar, get_max_pool, get_data_next_step, get_LCM_input_shape, expand_same_shape, Sum, Mean, Channel_Gen, Flatten, Permute, Reshape, add_data_noise 
+from cindm.GraphPDE.gnn_module import mesh_PDE
 from torch_geometric.data import Data
 
 def get_conv_func(pos_dim, *args, **kwargs):

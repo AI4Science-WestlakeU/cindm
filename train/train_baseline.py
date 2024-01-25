@@ -18,11 +18,11 @@ import sys, os
 sys.path.append(os.path.join(os.path.dirname("__file__"), '..'))
 sys.path.append(os.path.join(os.path.dirname("__file__"), '..', '..'))
 sys.path.append(os.path.join(os.path.dirname("__file__"), '..', '..', '..'))
-from CinDM_anonymous.le_pde.datasets.load_dataset import load_data
-from CinDM_anonymous.le_pde.argparser import arg_parse
-from CinDM_anonymous.le_pde.models import get_model, load_model, unittest_model, build_optimizer, test
-from CinDM_anonymous.le_pde.pytorch_net.util import pload, pdump, get_time, update_args, clip_grad, Batch, set_seed, update_dict, plot_matrices, make_dir, to_np_array, record_data, Early_Stopping, str2bool, get_filename_short, get_num_params, ddeepcopy as deepcopy, write_to_config
-from CinDM_anonymous.le_pde.utils import p, EXP_PATH, get_model_dict, get_elements, is_diagnose, get_keys_values, loss_op, to_tuple_shape, parse_string_idx_to_list, parse_multi_step, get_device, Channel_Gen, process_data_for_CNN, get_activation, get_normalization, Mean, Flatten, Permute, Reshape, to_cpu, PyG_to_Attr_Dict
+from cindm.le_pde.datasets.load_dataset import load_data
+from cindm.le_pde.argparser import arg_parse
+from cindm.le_pde.models import get_model, load_model, unittest_model, build_optimizer, test
+from cindm.le_pde.pytorch_net.util import pload, pdump, get_time, update_args, clip_grad, Batch, set_seed, update_dict, plot_matrices, make_dir, to_np_array, record_data, Early_Stopping, str2bool, get_filename_short, get_num_params, ddeepcopy as deepcopy, write_to_config
+from cindm.le_pde.utils import p, EXP_PATH, get_model_dict, get_elements, is_diagnose, get_keys_values, loss_op, to_tuple_shape, parse_string_idx_to_list, parse_multi_step, get_device, Channel_Gen, process_data_for_CNN, get_activation, get_normalization, Mean, Flatten, Permute, Reshape, to_cpu, PyG_to_Attr_Dict
 
 import os
 os.environ['CUDA_LAUNCH_BLOCKING'] = "1"

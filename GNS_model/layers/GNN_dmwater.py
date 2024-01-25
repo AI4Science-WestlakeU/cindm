@@ -3,7 +3,7 @@ from torch import nn
 import torch.nn.functional as F
 import numpy as np
 
-from CinDM_anonymous.GNS_model.config import _C as C
+from cindm.GNS_model.config import _C as C
 
 
 class MessagePassing(nn.Module):

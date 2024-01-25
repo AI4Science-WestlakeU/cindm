@@ -17,7 +17,7 @@ import yaml
 import sys, os
 sys.path.append(os.path.join(os.path.dirname("__file__"), '..'))
 sys.path.append(os.path.join(os.path.dirname("__file__"), '..', '..'))
-from CinDM_anonymous.le_pde.pytorch_net.util import lcm, L2Loss, Attr_Dict, Printer
+from cindm.le_pde.pytorch_net.util import lcm, L2Loss, Attr_Dict, Printer
 
 p = Printer(n_digits=6)
 

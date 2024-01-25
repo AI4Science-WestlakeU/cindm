@@ -3,11 +3,11 @@ import torch
 import random
 from random import sample
 from torch.utils.data import Dataset
-import CinDM_anonymous.utils
+import cindm.utils as utils
 import pickle
 import json
 import numpy as np
-from CinDM_anonymous.GNS_model.config import _C as C
+from cindm.GNS_model.config import _C as C
 import torch.nn.functional as F
 import pdb
 
@@ -167,9 +167,9 @@ class nbody_gns_dataset_cond_one(Dataset):
         for key in self.metadata:
             self.metadata[key] = torch.from_numpy(np.array(self.metadata[key]).astype(np.float32))
         if self.n_bodies==4:
-            self.data = torch.FloatTensor(np.load("/user/project/inverse_design/dataset/nbody_dataset/train/trajectory_balls_4_simu_2000_steps_1000.npy"))
+            self.data = torch.FloatTensor(np.load(self.data_dir+"/train/trajectory_balls_4_simu_2000_steps_1000.npy"))
         elif self.n_bodies==2:
-            self.data = torch.FloatTensor(np.load("/user/project/inverse_design/dataset/nbody_dataset/train/trajectory_balls_2_simu_2000_steps_1000.npy"))
+            self.data = torch.FloatTensor(np.load(self.data_dir+"/train/trajectory_balls_2_simu_2000_steps_1000.npy"))
         elif self.n_bodies==3:
             self.data = torch.FloatTensor(np.load("/user/project/inverse_design/dataset2/nbody_dataset/nbody-3/speed-100/trajectory_balls_3_simu_1000_steps_1000.npy"))
         elif self.n_bodies==8:

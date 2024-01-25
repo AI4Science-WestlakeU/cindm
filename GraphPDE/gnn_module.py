@@ -1,7 +1,7 @@
 from torch_geometric.nn import MessagePassing
 import modules
 import torch
-import CinDM_anonymous.utils
+import cindm.utils
 from torch import nn
 
 class processor(MessagePassing):

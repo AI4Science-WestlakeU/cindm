@@ -13,7 +13,7 @@ import torch.nn.functional as F
 import numpy as np
 from torch.utils.data import Dataset#, DataLoader
 
-from CinDM_anonymous.data.airfoil_dataset import Ellipse
+from cindm.data.airfoil_dataset import Ellipse
 # from torch_geometric.loader import DataLoader
 from torch_geometric.data.dataloader import DataLoader
 from torch_geometric.nn import GCNConv
@@ -33,7 +33,7 @@ from ema_pytorch import EMA
 from accelerate import Accelerator
 
 from imageio import imwrite
-from CinDM_anonymous.utils import p
+from cindm.utils import p
 import os
 
 

@@ -14,7 +14,7 @@ from datetime import datetime
 from time import localtime, strftime, time
 sys.path.append(os.path.join(os.path.dirname("__file__"), '..'))
 sys.path.append(os.path.join(os.path.dirname("__file__"), '..', '..'))
-from CinDM_anonymous.le_pde.MP_Neural_PDE_Solvers.equations.PDEs import *
+from cindm.le_pde.MP_Neural_PDE_Solvers.equations.PDEs import *
 
 
 

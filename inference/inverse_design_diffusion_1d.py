@@ -31,18 +31,18 @@ import sys
 import os
 sys.path.append(os.path.join(os.path.dirname("__file__"), '..'))
 sys.path.append(os.path.join(os.path.dirname("__file__"), '..', '..'))
-from CinDM_anonymous.utils import compute_pressForce,caculate_confidence_interval
+from cindm.utils import compute_pressForce,caculate_confidence_interval
 from tqdm import tqdm
 import matplotlib.backends.backend_pdf
 import pprint as pp
 
 import sys, os
 import ast
-from CinDM_anonymous.data.nbody_dataset import NBodyDataset
-from CinDM_anonymous.model.diffusion_1d import TemporalUnet1D, GaussianDiffusion1D
-from CinDM_anonymous.utils import p, get_item_1d, eval_simu, simulation, to_np_array, make_dir, pdump, pload
+from cindm.data.nbody_dataset import NBodyDataset
+from cindm.model.diffusion_1d import TemporalUnet1D, GaussianDiffusion1D
+from cindm.utils import p, get_item_1d, eval_simu, simulation, to_np_array, make_dir, pdump, pload
 device = torch.device("cuda:0")
-import CinDM_anonymous.filepath as filepath
+import cindm.filepath as filepath
 
 # In[ ]:
 

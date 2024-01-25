@@ -1,11 +1,11 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from CinDM_anonymous.GNS_model.config import _C as C
-from CinDM_anonymous.GNS_model.layers.GNN_dmwater import GraphNet
+from cindm.GNS_model.config import _C as C
+from cindm.GNS_model.layers.GNN_dmwater import GraphNet
 from scipy import spatial
 import numpy as np
-import CinDM_anonymous.GNS_model.utils
+import cindm.GNS_model.utils as utils
 import pdb
 
 def poss_offset(poss,n_bodies):

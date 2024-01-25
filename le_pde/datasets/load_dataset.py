@@ -19,13 +19,13 @@ import sys, os
 sys.path.append(os.path.join(os.path.dirname("__file__"), '..'))
 sys.path.append(os.path.join(os.path.dirname("__file__"), '..', '..'))
 sys.path.append(os.path.join(os.path.dirname("__file__"), '..', '..', '..'))
-from CinDM_anonymous.le_pde.datasets.mppde1d_dataset import MPPDE1D
-from CinDM_anonymous.le_pde.datasets.fno_dataset import FNOData
-from CinDM_anonymous.le_pde.datasets.karman3d_dataset import Karman3D
-from CinDM_anonymous.le_pde.datasets.movinggas_dataset import MovingGas
-from CinDM_anonymous.data.airfoil_dataset import Ellipse
-from CinDM_anonymous.le_pde.pytorch_net.util import ddeepcopy as deepcopy, Batch, make_dir
-from CinDM_anonymous.le_pde.utils import p, PDE_PATH, get_elements, is_diagnose, get_keys_values, loss_op, to_tuple_shape, parse_string_idx_to_list, parse_multi_step, get_device, Channel_Gen, process_data_for_CNN, get_activation, get_normalization, Mean, Flatten, Permute, Reshape, to_cpu, add_data_noise
+from cindm.le_pde.datasets.mppde1d_dataset import MPPDE1D
+from cindm.le_pde.datasets.fno_dataset import FNOData
+from cindm.le_pde.datasets.karman3d_dataset import Karman3D
+from cindm.le_pde.datasets.movinggas_dataset import MovingGas
+from cindm.data.airfoil_dataset import Ellipse
+from cindm.le_pde.pytorch_net.util import ddeepcopy as deepcopy, Batch, make_dir
+from cindm.le_pde.utils import p, PDE_PATH, get_elements, is_diagnose, get_keys_values, loss_op, to_tuple_shape, parse_string_idx_to_list, parse_multi_step, get_device, Channel_Gen, process_data_for_CNN, get_activation, get_normalization, Mean, Flatten, Permute, Reshape, to_cpu, add_data_noise
 
 
 def load_data(args, **kwargs):

@@ -11,9 +11,9 @@ import sys, os
 sys.path.append(os.path.join(os.path.dirname("__file__"), '..', '..'))
 sys.path.append(os.path.join(os.path.dirname("__file__"), '..'))
 sys.path.append(os.path.join(os.path.dirname("__file__"), '..', '..', '..'))
-from CinDM_anonymous.le_pde.utils import to_tuple_shape, MPPDE1D_PATH, PDE_PATH
-from CinDM_anonymous.le_pde.MP_Neural_PDE_Solvers.common.utils import HDF5Dataset
-from CinDM_anonymous.le_pde.MP_Neural_PDE_Solvers.equations.PDEs import *
+from cindm.le_pde.utils import to_tuple_shape, MPPDE1D_PATH, PDE_PATH
+from cindm.le_pde.MP_Neural_PDE_Solvers.common.utils import HDF5Dataset
+from cindm.le_pde.MP_Neural_PDE_Solvers.equations.PDEs import *
 
 
 

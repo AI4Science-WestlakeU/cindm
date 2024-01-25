@@ -954,7 +954,7 @@ import pymunk
 import pygame
 import random
 from tqdm.auto import tqdm
-from CinDM_anonymous.utils import make_dir,get_item_1d
+from cindm.utils import make_dir,get_item_1d
 import imageio
 import pdb
 from torch_geometric.data.dataloader import DataLoader

@@ -10,16 +10,16 @@ import os
 import pdb
 sys.path.append(os.path.join(os.path.dirname("__file__"), '..'))
 sys.path.append(os.path.join(os.path.dirname("__file__"), '..', '..'))
-from CinDM_anonymous.model.diffusion_1d import Unet1D, TemporalUnet1D, GaussianDiffusion1D, Trainer1D,Unet1D_forward_model
-from CinDM_anonymous.filepath import EXP_PATH
+from cindm.model.diffusion_1d import Unet1D, TemporalUnet1D, GaussianDiffusion1D, Trainer1D,Unet1D_forward_model
+from cindm.filepath import EXP_PATH
 import pprint as pp
 import torch
-from CinDM_anonymous.utils import Printer, make_dir,caculate_num_parameters
+from cindm.utils import Printer, make_dir,caculate_num_parameters
 p = Printer(n_digits=6)
 import logging
 import datetime
-import CinDM_anonymous.GNS_model
-import CinDM_anonymous.filepath as filepath
+import cindm.GNS_model
+import cindm.filepath as filepath
 parser = argparse.ArgumentParser(description='Train EBM model')
 parser.add_argument('--exp_id', default='inv_design', type=str,
                     help='experiment folder id')

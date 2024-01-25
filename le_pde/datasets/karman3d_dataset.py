@@ -7,10 +7,10 @@ from torch_geometric.data import Dataset, Data
 import pdb
 import sys, os
 sys.path.append(os.path.join(os.path.dirname("__file__"), '..', '..'))
-from CinDM_anonymous.le_pde.utils import PDE_PATH, KARMAN3D_PATH
-from CinDM_anonymous.le_pde.pytorch_net.util import plot_matrices
-from CinDM_anonymous.le_pde.utils import get_root_dir, to_tuple_shape
-from CinDM_anonymous.le_pde.utils import read_zipped_array, write_zipped_array
+from cindm.le_pde.utils import PDE_PATH, KARMAN3D_PATH
+from cindm.le_pde.pytorch_net.util import plot_matrices
+from cindm.le_pde.utils import get_root_dir, to_tuple_shape
+from cindm.le_pde.utils import read_zipped_array, write_zipped_array
 
 
 class Karman3D(Dataset):
