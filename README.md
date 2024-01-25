@@ -3,8 +3,8 @@
 [Paper](https://openreview.net/forum?id=wmX0CqFSd7) | [Poster](https://github.com/AI4Science-WestlakeU/cindm/blob/main/assets/CinDM_poster.pdf) | [Tweet](https://twitter.com/tailin_wu/status/1747259448635367756) 
 
 Official repo for the paper [Compositional Generative Inverse  Design](https://openreview.net/forum?id=wmX0CqFSd7)<br />
-[Tailin Wu*](https://tailin.org/), [Takashi Maruyama*](https://sites.google.com/view/tmaruyama/home), [Long Wei*](), [Tao Zhang*](), [Yilun Du*](https://yilundu.github.io/),[Gianluca Iaccarino](https://profiles.stanford.edu/gianluca-iaccarino) [Jure Leskovec](https://cs.stanford.edu/people/jure/)<br />
-ICLR 2024 **spotlight**. 
+[Tailin Wu*](https://tailin.org/), [Takashi Maruyama*](https://sites.google.com/view/tmaruyama/home), [Long Wei*](), [Tao Zhang*](), [Yilun Du*](https://yilundu.github.io/), [Gianluca Iaccarino](https://profiles.stanford.edu/gianluca-iaccarino), [Jure Leskovec](https://cs.stanford.edu/people/jure/)<br />
+ICLR 2024 **Spotlight**. 
 
 We propose a novel formulation for inverse design as an energy optimization problem and introduce Compositional Inverse Design with Diffusion Models method(CinDM) to enable us to generalize to out-of-distribution and more complex design inputs than seen in training, which outperforms the existing works in n-body and 2D airfoil design.
 <!-- <a href="url"><img src="https://github.com/snap-stanford/lamp/blob/master/assets/lamp_architecture.png" align="center" width="700" ></a>
