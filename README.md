@@ -1,6 +1,6 @@
 # CinDM: Compositional Generative Inverse  Design (ICLR 2024 spotlight)
 
-[Paper](https://openreview.net/forum?id=wmX0CqFSd7) |[arXiv](https://arxiv.org/abs/2401.13171)| [Poster](https://github.com/AI4Science-WestlakeU/cindm/blob/main/assets/CinDM_poster.pdf) | [Tweet](https://twitter.com/tailin_wu/status/1747259448635367756) 
+[Paper](https://openreview.net/forum?id=wmX0CqFSd7) | [arXiv](https://arxiv.org/abs/2401.13171) | [Poster](https://github.com/AI4Science-WestlakeU/cindm/blob/main/assets/CinDM_poster.pdf) | [Tweet](https://twitter.com/tailin_wu/status/1747259448635367756) 
 
 Official repo for the paper [Compositional Generative Inverse  Design](https://openreview.net/forum?id=wmX0CqFSd7)<br />
 [Tailin Wu*](https://tailin.org/), [Takashi Maruyama*](https://sites.google.com/view/tmaruyama/home), [Long Wei*](), [Tao Zhang*](), [Yilun Du*](https://yilundu.github.io/),[Gianluca Iaccarino](https://profiles.stanford.edu/gianluca-iaccarino) [Jure Leskovec](https://cs.stanford.edu/people/jure/)<br />
