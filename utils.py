@@ -248,7 +248,7 @@ def convert_softbd2hard(softbd):
     Args:
         softbd: grid with values ranging between 0 and 1
     Output:
-        hardbd: grid with binary values, where 1 incidates existance of boundary
+        hardbd: grid with binary values, where 1 incidates existence of boundary
     """
     ones = softbd > 0.5
     zeros = softbd <= 0.5
