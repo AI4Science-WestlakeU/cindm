@@ -19,7 +19,7 @@ import torch
 from torch_geometric.data.dataloader import DataLoader
 from cindm.utils import p, get_item_1d, COLOR_LIST,CustomSampler,simulation,eval_simu,caculate_confidence_interval,cosine_beta_schedule
 from torch.autograd import grad
-
+import tqdm
 # In[ ]:
 import argparse
 import cindm.GNS_model as GNS_model
@@ -27,6 +27,7 @@ import torch.nn as nn
 import os
 import math
 import cindm.filepath as filepath
+from cindm.utils import setup_seed
 parser = argparse.ArgumentParser(description='Analyze the trained model')
 
 parser.add_argument('--exp_id', default='inv_design', type=str, help='experiment folder id')
@@ -40,7 +41,8 @@ parser.add_argument('--time_interval', default=4, type=int, help='time interval'
 parser.add_argument('--attention', default=True, type=bool, help='whether to use attention block')
 parser.add_argument('--loss_weight_discount', default=1, type=float,
                     help='multiplies t^th timestep of trajectory loss by discount**t')
-
+parser.add_argument('--gpuid', default=0, type=int,
+                    help='the id of gpu to use')
 parser.add_argument('--milestone', default=1, type=int, help='in which milestone model was saved')
 parser.add_argument('--val_batch_size', default=50, type=int, help='batch size for validation')
 parser.add_argument('--is_test', default=True, type=bool,help='flag for testing')
@@ -99,11 +101,11 @@ parser.add_argument('--num_batchs', default=1, type=int,
                     help='number of batchs ')
 parser.add_argument('--batch_size_list', default="[500]", type=str,
                     help='the list of different batch_size ')
-
+parser.add_argument('--seed', default=0, type=int,
+                    help='random seed')
 args = parser.parse_args()
-
+setup_seed(args.seed) # set random seed
 # def L_bnd(x):
-    
 #     l_bnd=torch.nn.ReLU()
 mu_x=torch.tensor([0.,0.,0.,0.],requires_grad=True)
 # def L_bnd(x):
@@ -219,7 +221,7 @@ def CEM_1d(cond,model,model_method,design_fn,max_design_steps,args,metadata=None
         std=torch.clamp(torch.randn_like(cond),min=0)
         design_obj=0
         design_obj_list=[]
-        for i in range(max_design_steps):
+        for i in tqdm.trange(range(max_design_steps)):
             p.print(f"test_start  {i}  design_obj {design_obj}", tabs=0, is_datetime=None, banner_size=0, end=None, avg_window=1, precision="millisecond", is_silent=False)
             # c_list=[]
             for j in range(args.N):
@@ -380,7 +382,7 @@ def analyse(val_batch_size,loss_list):
     args.val_batch_size=val_batch_size
     print(args.__dict__)
     if torch.cuda.is_available():
-        device = torch.device("cuda")
+        device = torch.device(f"cuda:{args.gpuid}")
         print("GPU is available.")
     else:
         device = torch.device("cpu")
@@ -554,7 +556,7 @@ def analyse(val_batch_size,loss_list):
                             coefficient_noise=linear_beta_schedule(args.max_design_steps)*args.coef_max_noise
                             # coef_grad_schedule=linear_beta_schedule(args.max_design_steps)
                             # pdb.set_trace()
-                            for i in range(args.max_design_steps):
+                            for i in tqdm.trange(args.max_design_steps):
                                 pred_design=pred_design.clone().detach()
                                 pred_design=Unet(cond_design)
                                 design_obj = design_fn(pred_design)
@@ -639,7 +641,7 @@ def analyse(val_batch_size,loss_list):
                             coefficient_noise=linear_beta_schedule(args.max_design_steps)*args.coef_max_noise
                             pred_step_design=torch.cat([cond.clone()]*(args.rollout_steps*args.n_composed),dim=1)
                             pred_design=torch.cat([cond.clone()]*(args.rollout_steps+(args.n_composed-1)*10),dim=1)
-                            for j in range(args.max_design_steps):
+                            for j in tqdm.trange(args.max_design_steps):
                                 pred_design=pred_design.clone().detach()
                                 pred_step_design=pred_step_design.clone().detach()
                                 cond_design=torch.tensor(cond_design.clone().detach(),requires_grad=True)
@@ -726,7 +728,7 @@ def analyse(val_batch_size,loss_list):
                         # pdb.set_trace()
                         coefficient_noise=linear_beta_schedule(args.max_design_steps)*args.coef_max_noise
                         pred_design=torch.cat([cond]*(args.rollout_steps+(args.n_composed-1)*10),dim=1)
-                        for i in range(args.max_design_steps):
+                        for i in tqdm.trange(args.max_design_steps):
                             # pdb.set_trace()
                             pred_design=pred_design.clone().detach()
                             cond_design=torch.tensor(cond_design.clone().detach(),requires_grad=True)
@@ -784,7 +786,7 @@ def analyse(val_batch_size,loss_list):
                 # pdb.set_trace()
                 # pred_design=pred_design[:,1:,:]
             elif args.method_type=="GNS_direct":##To do 注意GNS——direct和Unet compose的时候索引问题
-                dataloader_GNS=DataLoader(test_dataset, batch_size=args.val_batch_size, shuffle=False, pin_memory=True, num_workers=6)
+                dataloader_GNS=DataLoader(test_dataset, batch_size=args.val_batch_size, shuffle=False, pin_memory=True, num_workers=1)
                 for data_GNS in dataloader_GNS:
                     break
                 poss_cond,vel, tgt_accs, tgt_vels, particle_type, nonk_mask, tgt_poss =data_GNS
@@ -792,7 +794,7 @@ def analyse(val_batch_size,loss_list):
                 y_gt=torch.cat([tgt_poss,tgt_vels],dim=3).reshape(tgt_poss.shape[0],tgt_poss.shape[2],-1)
                 cond=torch.tensor(cond,requires_grad=True).to(device)
                 cond=get_cond(cond,initialization_mode=args.initialization_mode)
-                
+                cond.requires_grad=True
                 pred_step=torch.cat([cond.clone()]*(args.rollout_steps*args.n_composed),dim=2)
                 pred_step=pred_step.reshape(pred_step.shape[0],pred_step.shape[2],-1)
                 pred=torch.cat([cond.clone()]*(args.rollout_steps+(args.n_composed-1)*10),dim=2)
@@ -838,7 +840,7 @@ def analyse(val_batch_size,loss_list):
                     pred_step_design=torch.cat([cond.clone()]*(args.rollout_steps*args.n_composed),dim=2)
                     pred_step_design=pred_step_design.reshape(pred_step_design.shape[0],pred_step_design.shape[2],-1)
                     pred_design=torch.cat([cond.clone()]*(args.rollout_steps+(args.n_composed-1)*10),dim=2)
-                    for j in range(args.max_design_steps):
+                    for j in tqdm.trange(args.max_design_steps):
                         # coef_grad=args.coef_grad*(0.95**(j/10))
                         coef_grad=args.coef_grad
                         # y_gt,pred_design,cond_design=GNS_model.dyn_model.GNS_inference(data_GNS,cond_design,gns_model,test_dataset.metadata,device)
@@ -951,7 +953,7 @@ def analyse(val_batch_size,loss_list):
                     coefficient_noise=linear_beta_schedule(args.max_design_steps)*args.coef_max_noise
                     # pdb.set_trace()
                     pred_design=pred
-                    for i in range(args.max_design_steps):
+                    for i in tqdm.trange(args.max_design_steps):
                         coef_grad=args.coef_grad*(0.95**(i/10.))
                         # coef_grad=args.coef_grad
                         pred_design=pred_design.clone().detach()

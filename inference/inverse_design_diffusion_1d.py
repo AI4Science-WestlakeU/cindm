@@ -41,7 +41,7 @@ import ast
 from cindm.data.nbody_dataset import NBodyDataset
 from cindm.model.diffusion_1d import TemporalUnet1D, GaussianDiffusion1D
 from cindm.utils import p, get_item_1d, eval_simu, simulation, to_np_array, make_dir, pdump, pload
-device = torch.device("cuda:0")
+from cindm.utils import setup_seed
 import cindm.filepath as filepath
 
 # In[ ]:
@@ -69,6 +69,8 @@ parser.add_argument('--num_features', default=4, type=int,
 
 parser.add_argument('--dataset_path', default=filepath.current_wp+"/dataset/nbody_dataset", type=str,
                     help='the path to load dataset')
+parser.add_argument('--gpuid', default=0, type=int,
+                    help='the id of gpu to use')
 
 parser.add_argument('--n_composed', default=0, type=int,
                     help='how many prediction to be composed')
@@ -97,6 +99,8 @@ parser.add_argument('--batch_size_list', default="[50]", type=str,
                     help='the list of different batch_size ')
 parser.add_argument('--sample_steps_list', default="[1000]", type=str,
                     help='the list of sample steps ')
+parser.add_argument('--seed', default=0, type=int,
+                    help='random seed')
 try:
     get_ipython().run_line_magic('matplotlib', 'inline')
     args = parser.parse_args([])
@@ -154,8 +158,8 @@ else:
 # ## Load model and dataset:
 
 # In[ ]:
-
-
+device = torch.device("cuda:"+str(args.gpuid) if torch.cuda.is_available() else "cpu")
+setup_seed(args.seed) # set random seed
 model = TemporalUnet1D(
     horizon=args.conditioned_steps + args.rollout_steps,### horizon Maybe match the time_steps
     transition_dim=2*args.num_features, #n_bodies = 2, this matches num_bodies*nun_feactures
@@ -186,7 +190,7 @@ dataset = NBodyDataset(
     dataset_path=args.dataset_path
 )
 dataloader = DataLoader(dataset, batch_size=args.val_batch_size, shuffle=False, pin_memory=True, num_workers=6)
-
+# pdb.set_trace()
 for data in dataloader:
     break
 if args.model_name not in ["Diffusion_cond-0_rollout-24_bodies-2", "Diffusion_cond-0_rollout-24_bodies-2_more_collision","Diffusion_cond-0_rollout-44_bodies-2","Diffusion_cond-0_rollout-44_bodies-2_Unet_dim-96"]:
@@ -296,7 +300,6 @@ for sample_steps in sample_steps_list:
                         data_record["design_coef"] = design_coef
                         data_record["consistency_coef"] = consistency_coef
                         data_record["design_guidance"] = design_guidance
-                        
                         pred = diffusion.sample(
                             batch_size=args.val_batch_size,
                             cond=cond,

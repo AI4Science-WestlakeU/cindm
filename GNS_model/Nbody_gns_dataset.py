@@ -7,10 +7,13 @@ import cindm.utils as utils
 import pickle
 import json
 import numpy as np
+import sys
+sys.path.append(os.path.join(os.path.dirname("__file__"), '..'))
+sys.path.append(os.path.join(os.path.dirname("__file__"), '..', '..'))
 from cindm.GNS_model.config import _C as C
 import torch.nn.functional as F
 import pdb
-
+from torch_geometric.data.dataloader import DataLoader
 def _read_metadata(data_path):
   with open(os.path.join(data_path, 'metadata.json'), 'rt') as fp:
     return json.loads(fp.read())
@@ -33,11 +36,12 @@ class nbody_gns_dataset(Dataset):
         self.rollout_steps=rollout_steps
         self.n_his=n_his
         self.time_interval=time_interval
-        self.time_stamps_effective=200
+        self.time_stamps=980
         self.verbose=verbose
         self.input_steps=input_steps
         self.output_steps=output_steps
         self.t_cushion_input = self.input_steps * self.time_interval if self.input_steps * self.time_interval > 1 else 1
+        self.time_stamps_effective = (self.time_stamps - self.t_cushion_input - self.t_cushion_output) // self.time_interval
         self.data=None
         self.n_bodies=n_bodies
         self.is_train=is_train
@@ -148,11 +152,13 @@ class nbody_gns_dataset_cond_one(Dataset):
         self.rollout_steps=rollout_steps
         self.n_his=n_his
         self.time_interval=time_interval
-        self.time_stamps_effective=200
+        self.time_stamps=980
         self.verbose=verbose
         self.input_steps=input_steps
         self.output_steps=output_steps
-        self.t_cushion_input = (self.input_steps * self.time_interval if self.input_steps * self.time_interval > 1 else 1)+1
+        self.t_cushion_input = (self.input_steps * self.time_interval if self.input_steps * self.time_interval > 1 else 1)
+        self.t_cushion_output=self.output_steps * self.time_interval if self.output_steps * self.time_interval > 1 else 1
+        self.time_stamps_effective = (self.time_stamps - self.t_cushion_input - self.t_cushion_output) // self.time_interval
         self.data=None
         self.n_bodies=n_bodies
         self.is_train=is_train
@@ -173,15 +179,15 @@ class nbody_gns_dataset_cond_one(Dataset):
         elif self.n_bodies==3:
             self.data = torch.FloatTensor(np.load("/user/project/inverse_design/dataset2/nbody_dataset/nbody-3/speed-100/trajectory_balls_3_simu_1000_steps_1000.npy"))
         elif self.n_bodies==8:
-            self.total_n_simu=200
-            if is_train:
-                self.n_simu=180
-            else:
-                self.n_simu=20
-            self.data = torch.FloatTensor(np.load("/user/project/inverse_design/dataset/nbody_dataset/nbody-8/trajectory_balls_8_simu_200_steps_1000.npy"))
+            # self.total_n_simu=200
+            # if is_train:
+            #     self.n_simu=180
+            # else:
+            #     self.n_simu=20
+            self.data = torch.FloatTensor(np.load(self.data_dir+"/train/trajectory_balls_8_simu_200_steps_1000.npy"))
 
     def __len__(self):
-        return 200*self.n_simu
+        return self.time_stamps_effective * self.n_simu
 
     def __getitem__(self, idx):
         
@@ -196,12 +202,22 @@ class nbody_gns_dataset_cond_one(Dataset):
             print("end:", time_id * self.time_interval + self.t_cushion_input + self.output_steps * self.time_interval)
         # self.data shape: [n_simu, n_steps:1000, n_bodies, n_features:4]
         # x: [input_steps, n_bodies, n_features
-
+        if self.output_steps%2!=-0:
+            self.output_steps=self.output_steps+1
         x = self.data[sim_id, time_id * self.time_interval + self.t_cushion_input - self.input_steps * self.time_interval: time_id * self.time_interval + self.t_cushion_input: self.time_interval].transpose(1,0)
         y = self.data[sim_id, time_id * self.time_interval + self.t_cushion_input: time_id * self.time_interval + self.t_cushion_input + self.output_steps * self.time_interval: self.time_interval].transpose(1,0)
-        y_next = self.data[sim_id,time_id * self.time_interval + self.t_cushion_input: time_id * self.time_interval + self.t_cushion_input + (self.output_steps+1) * self.time_interval: self.time_interval].transpose(1,0)
-        y_next=y_next[:,1:self.output_steps+1,:]
-          # y_last=torch.cat([x,y[:,1:self.output_steps,:]],dim=1)
+        # y_next = self.data[sim_id,time_id * self.time_interval + self.t_cushion_input: time_id * self.time_interval + self.t_cushion_input + (self.output_steps+1) * self.time_interval: self.time_interval].transpose(1,0)
+        # y_next=y_next[:,1:self.output_steps+1,:]
+        # Hack：
+        y_next =y[:,1:,:]
+        y=y[:,:-1,:]
+        if y.shape[1]<self.output_steps or y_next.shape[1]<self.output_steps:
+            print("sim_id, time_id:", (sim_id, time_id))
+            print("start:", time_id * self.time_interval + self.t_cushion_input - self.input_steps * self.time_interval)
+            print("mid:", time_id * self.time_interval + self.t_cushion_input)
+            print("end:", time_id * self.time_interval + self.t_cushion_input + self.output_steps * self.time_interval)
+            print("EEEEEEEEEEEEE????????????????????????")
+        # y_last=torch.cat([x,y[:,1:self.output_steps,:]],dim=1)
         # x [n_bodies,3,n_bodies*n_features]
         #y [n_bodies,num_timesteps,n_features]
         particle_type=torch.ones(self.n_bodies).long()
@@ -219,9 +235,18 @@ class nbody_gns_dataset_cond_one(Dataset):
             poss = poss + sampled_noise
 
             tgt_poss = tgt_poss + sampled_noise[:, -1:]
-        
-        tgt_vels = torch.tensor(utils.time_diff(np.concatenate([poss, tgt_poss], axis=1)))
-        tgt_accs =(y_next[:,:,:2]-tgt_poss)-tgt_vels #a(k)=v(k+1)-v(k)
+        try:
+            tgt_vels = torch.tensor(utils.time_diff(np.concatenate([poss, tgt_poss], axis=1)))
+            tgt_accs =(y_next[:,:,:2]-tgt_poss)-tgt_vels #a(k)=v(k+1)-v(k)
+            # print("poss shape",poss.shape)
+            # print("tgt_poss shape",tgt_poss.shape)
+            # print("y_next shape",y_next.shape)
+            # print("tgt_vels shape",tgt_vels.shape)
+        except:
+            print("poss shape",poss.shape)
+            print("tgt_poss shape",tgt_poss.shape)
+            print("y_next shape",y_next.shape)
+            print("tgt_vels shape",tgt_vels.shape)
 
 
         # tgt_vels = y[:,:,2:]
@@ -258,8 +283,18 @@ class nbody_gns_dataset_cond_one(Dataset):
         return poss, vel,tgt_accs, tgt_vels, particle_type, nonk_mask, tgt_poss
 
 if __name__=="__main__":
-    train_set=nbody_gns_dataset_cond_one(
-        data_dir="/user/project/test/GNS-PyTorch/data/n_body_dataset/",
+    test_set=nbody_gns_dataset_cond_one(
+        data_dir="/zhangtao/cindm/dataset/nbody_dataset",
+        phase='test',
+        time_interval=4,
+        verbose=0,
+        output_steps=23,
+        n_bodies=2,
+        is_train=False,
+        device="cuda"
         )
     # pdb.set_trace()
-    print(train_set[0])
+    dataloader_GNS=DataLoader(test_set, batch_size=500, shuffle=False, pin_memory=True, num_workers=6)
+    for data_GNS in dataloader_GNS:
+        break
+    pdb.set_trace()
