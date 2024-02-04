@@ -9,7 +9,7 @@ ICLR 2024 **spotlight**.
 We propose a novel formulation for inverse design as an energy optimization problem and introduce Compositional Inverse Design with Diffusion Models method(CinDM) to enable us to generalize to out-of-distribution and more complex design inputs than seen in training, which outperforms the existing works in n-body and 2D airfoil design.
 
 Framework of CinDM:
-<a href="url"><img src="https://github.com/AI4Science-WestlakeU/cindm/blob/main/assets/fig1.png" align="center" width="800" ></a>
+<a href="url"><img src="https://github.com/AI4Science-WestlakeU/cindm/blob/main/assets/fig1.png" align="center" width="600" ></a>
 
 ## Installation
 
