@@ -119,6 +119,16 @@ Example for two airfoils design with CEM using FNO:
 python inference/baseline/inverse_design_CEM_discrete_fno_twobds.py
 ```
 
+Here is the visualization of generation process:
+
+<a href="url"><img src="https://github.com/AI4Science-WestlakeU/cindm/blob/main/assets/generation_process.gif" align="center" width="600" ></a>
+
+Here is one generated trajectories and the boundary mask:
+
+<a href="url"><img src="https://github.com/AI4Science-WestlakeU/cindm/blob/main/assets/generated_examples.gif" align="center" width="600" ></a>
+
+
+
 ## Related Projects
 
 * [BENO](https://github.com/AI4Science-WestlakeU/beno) (ICLR 2024): A boundary-embedded neural operator that incorporates complex boundary shape and inhomogeneous boundary values into the solving of Elliptic PDEs.
