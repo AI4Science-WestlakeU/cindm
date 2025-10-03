@@ -131,6 +131,10 @@ python inference/baseline/inverse_design_CEM_discrete_fno_twobds.py
 
 ## Related Projects
 
+* [DiffPhyCon](https://github.com/AI4Science-WestlakeU/diffphycon) (NeurIPS 2024): We introduce DiffPhyCon which uses diffusion generative models to jointly model control and simulation of complex physical systems as a single task. 
+
+* [WDNO](https://github.com/AI4Science-WestlakeU/wdno) (ICLR 2025): We propose Wavelet Diffusion Neural Operator (WDNO), a novel method for generative PDE simulation and control, to address diffusion models' challenges of modeling system states with abrupt changes and generalizing to higher resolutions, via performing diffusion in the wavelet space.
+
 * [BENO](https://github.com/AI4Science-WestlakeU/beno) (ICLR 2024): A boundary-embedded neural operator that incorporates complex boundary shape and inhomogeneous boundary values into the solving of Elliptic PDEs.
   
 * [LAMP](https://github.com/snap-stanford/lamp) (ICLR 2023 spotlight): First fully DL-based surrogate model that jointly optimizes spatial resolutions to reduce computational cost and learns the evolution model, learned via reinforcement learning.
